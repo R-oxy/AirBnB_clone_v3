@@ -66,13 +66,15 @@ class Place(BaseModel, Base):
                     review_list.append(review)
             return review_list
 
+    if getenv('HBNB_TYPE_STORAGE', 'file') == 'db':
         @property
         def amenities(self):
-            """getter attribute returns the list of Amenity instances"""
-            from models.amenity import Amenity
-            amenity_list = []
-            all_amenities = models.storage.all(Amenity)
-            for amenity in all_amenities.values():
-                if amenity.place_id == self.id:
-                    amenity_list.append(amenity)
-            return amenity_list
+            """
+            Lists all amenities for a place
+            """
+            result = []
+            for a_id in self.amenities_id:
+                amenity = models.storage.get(Amenity, a_id)
+                if amenity is not None:
+                    result.append(amenity)
+            return result
