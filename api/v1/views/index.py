@@ -1,4 +1,7 @@
 #!/usr/bin/python3
+"""
+Index model holds the endpoint (route)
+"""
 
 from api.v1.views import (
     app_views, storage, Amenity, City, Place,
@@ -9,6 +12,9 @@ from flask import jsonify
 
 @app_views.route('/status', methods=['GET'], strict_slashes=False)
 def get_status():
+    """Example endpoint returns status
+    returns the current status of the API
+    """
     return jsonify({"status": "OK"})
 
 
